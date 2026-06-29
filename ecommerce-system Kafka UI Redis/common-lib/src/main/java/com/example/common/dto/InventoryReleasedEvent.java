@@ -7,13 +7,14 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProcessPaymentCommand {
+public class InventoryReleasedEvent {
 
     private String sagaId;
-    private String orderId;
-    private Double amount;
 
-    // Needed for compensation
+    private String orderId;
+
     private String product;
+
     private int quantity;
+
 }

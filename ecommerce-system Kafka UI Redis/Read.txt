@@ -115,18 +115,148 @@ Saga Service
     | SagaState = COMPLETED
 
 
+Rollback Flow: 
+
+
+Client
+   │
+Order Service
+   │
+OrderCreatedEvent
+   │
+Saga
+   │
+ReserveInventoryCommand
+   │
+Inventory
+   │
+InventoryReservedEvent
+   │
+Saga
+   │
+ProcessPaymentCommand
+   │
+Payment
+   │
+PaymentFailedEvent
+   │
+Saga
+   │
+ReleaseInventoryCommand
+   │
+Inventory
+   │
+InventoryReleasedEvent
+   │
+Saga
+   │
+FAILED
+
+
+OR 
+
+│
+├── Step 1
+│      Add new Kafka Topics
+│
+├── Step 2
+│      Create Compensation DTOs
+│
+├── Step 3
+│      Payment Failure
+│
+├── Step 4
+│      Saga publishes ReleaseInventoryCommand
+│
+├── Step 5
+│      Inventory restores stock
+│
+├── Step 6
+│      Inventory publishes InventoryReleasedEvent
+│
+├── Step 7
+│      Saga marks FAILED
+│
+└── Step 8
+       End-to-End Rollback Demo
+
+
+OR   
+
+
+                    +----------------+
+                    | Order Service  |
+                    +-------+--------+
+                            |
+                    OrderCreated
+                            |
+                            ▼
+                     +-------------+
+                     | Saga Service|
+                     +------+------+
+                            |
+             ReserveInventoryCommand
+                            |
+                            ▼
+                 +----------------------+
+                 | Inventory Service    |
+                 +----------+-----------+
+                            |
+             InventoryReservedEvent
+                            |
+                            ▼
+                     +-------------+
+                     | Saga Service|
+                     +------+------+
+                            |
+              ProcessPaymentCommand
+                            |
+                            ▼
+                  +----------------+
+                  | Payment Service|
+                  +-------+--------+
+                          |
+          +---------------+----------------+
+          |                                |
+          ▼                                ▼
+ PaymentCompletedEvent             PaymentFailedEvent
+          |                                |
+          ▼                                ▼
+ Saga Completed               ReleaseInventoryCommand
+                                        |
+                                        ▼
+                              +----------------------+
+                              | Inventory Service    |
+                              +----------+-----------+
+                                         |
+                           InventoryReleasedEvent
+                                         |
+                                         ▼
+                                 +-------------+
+                                 | Saga Service|
+                                 +------+------+
+                                        |
+                             OrderCancelledEvent
+                                        |
+                                        ▼
+                               +----------------+
+                               | Order Service  |
+                               +----------------+
+
 
 NEXT : 
 
-1. Fix double serialization permanently
-2. Add Retry + DLT handling
-3. Add Docker health checks
-4. Add Kafka UI
-5. Add Integration Tests (Testcontainers)
-6. Add Saga Pattern
-7. Add Observability (Zipkin / OpenTelemetry)
+Implementation Plan
 
 
+✅ Create the new DTOs (ReleaseInventoryCommand, InventoryReleasedEvent, PaymentFailedEvent if needed).
+Add new Kafka topics.
+Implement increaseStock() in the Inventory Service.
+Add a release-inventory consumer to the Inventory Service.
+Modify the Payment Service to simulate success/failure.
+Update the Saga Service to orchestrate compensation.
+Update the Order Service to mark orders as CANCELLED.
+Test the complete rollback flow end-to-end.
 
 
 # Step 1: Open PostgreSQL Container

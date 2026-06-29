@@ -1,8 +1,6 @@
 package com.example.inventory.consumer;
 
-import com.example.common.dto.InventoryFailedEvent;
-import com.example.common.dto.InventoryReservedEvent;
-import com.example.common.dto.ReserveInventoryCommand;
+import com.example.common.dto.*;
 import com.example.inventory.entity.ProcessedEvent;
 import com.example.inventory.producer.InventoryProducer;
 import com.example.inventory.repository.ProcessedEventRepository;
@@ -99,5 +97,31 @@ public class InventoryConsumer {
 
             throw new RuntimeException(e);
         }
+    }
+    @KafkaListener(
+            topics = "release-inventory",
+            groupId = "inventory-group"
+    )
+    @Transactional
+    public void releaseInventory(
+            ReleaseInventoryCommand command) {
+
+        log.info("======================================");
+        log.info("ReleaseInventoryCommand received");
+        log.info("Order : {}", command.getOrderId());
+        log.info("======================================");
+
+        inventoryService.restoreStock(command);
+
+        producer.publishReleased(
+                new InventoryReleasedEvent(
+                        command.getSagaId(),
+                        command.getOrderId(),
+                        command.getProduct(),
+                        command.getQuantity()
+                )
+        );
+
+        log.info("Inventory Released Successfully");
     }
 }

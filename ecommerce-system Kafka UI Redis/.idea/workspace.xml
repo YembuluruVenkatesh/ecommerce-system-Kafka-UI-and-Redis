@@ -6,11 +6,33 @@
   <component name="ChangeListManager">
     <list default="true" id="c9d5e289-a88c-4adf-b1fa-a9fac19d7d55" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/../ecommerce-system" beforeDir="false" afterPath="$PROJECT_DIR$/../ecommerce-system" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Read.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Read.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-lib/src/main/java/com/example/common/dto/PaymentFailedEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/common-lib/src/main/java/com/example/common/dto/PaymentFailedEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-lib/src/main/java/com/example/common/dto/ProcessPaymentCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/common-lib/src/main/java/com/example/common/dto/ProcessPaymentCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-lib/target/classes/com/example/common/dto/PaymentFailedEvent.class" beforeDir="false" afterPath="$PROJECT_DIR$/common-lib/target/classes/com/example/common/dto/PaymentFailedEvent.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-lib/target/classes/com/example/common/dto/ProcessPaymentCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/common-lib/target/classes/com/example/common/dto/ProcessPaymentCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-lib/target/common-lib-1.0.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/common-lib/target/common-lib-1.0.0.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-lib/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/common-lib/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-lib/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/common-lib/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inventory-service/src/main/java/com/example/inventory/consumer/InventoryConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/inventory-service/src/main/java/com/example/inventory/consumer/InventoryConsumer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inventory-service/src/main/java/com/example/inventory/producer/InventoryProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/inventory-service/src/main/java/com/example/inventory/producer/InventoryProducer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inventory-service/src/main/java/com/example/inventory/service/InventoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/inventory-service/src/main/java/com/example/inventory/service/InventoryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/example/payment/consumer/PaymentConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/example/payment/consumer/PaymentConsumer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/saga-service/src/main/java/com/example/saga/consumer/SagaConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/saga-service/src/main/java/com/example/saga/consumer/SagaConsumer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/saga-service/src/main/java/com/example/saga/producer/SagaProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/saga-service/src/main/java/com/example/saga/producer/SagaProducer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -28,6 +50,7 @@
   "keyToString": {
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "codeWithMe.voiceChat.enabledByDefault": "false",

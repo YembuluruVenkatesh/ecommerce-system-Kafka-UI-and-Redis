@@ -12,4 +12,6 @@ public class PaymentFailedEvent {
     private String sagaId;
     private String orderId;
     private String reason;
+    private String product;
+    private int quantity;
 }

@@ -81,10 +81,14 @@ public class SagaConsumer {
         repository.save(saga);
 
         producer.sendProcessPayment(
+
                 new ProcessPaymentCommand(
+
                         event.getSagaId(),
                         event.getOrderId(),
-                        1000.0
+                        1000.0,
+                        event.getProduct(),
+                        event.getQuantity()
                 )
         );
 
@@ -118,6 +122,53 @@ public class SagaConsumer {
         log.info(
                 "Saga COMPLETED"
         );
+    }
+
+    @KafkaListener(
+            topics = "payment-failed",
+            groupId = "saga-group"
+    )
+    public void paymentFailed(PaymentFailedEvent event) {
+
+        log.info("======================================");
+        log.info("Payment Failed");
+        log.info("Order : {}", event.getOrderId());
+        log.info("======================================");
+
+        producer.publishReleaseInventory(
+                new ReleaseInventoryCommand(
+                        event.getSagaId(),
+                        event.getOrderId(),
+                        event.getProduct(),
+                        event.getQuantity()
+                )
+        );
+    }
+
+    @KafkaListener(
+            topics = "inventory-released",
+            groupId = "saga-group"
+    )
+    public void inventoryReleased(
+            InventoryReleasedEvent event) {
+
+        log.info("======================================");
+        log.info("Inventory Rollback Completed");
+        log.info("Saga Id  : {}", event.getSagaId());
+        log.info("Order Id : {}", event.getOrderId());
+        log.info("======================================");
+
+        producer.publishOrderCancelled(
+
+                new OrderCancelledEvent(
+
+                        event.getSagaId(),
+                        event.getOrderId(),
+                        "Payment Failed"
+                )
+        );
+
+        log.info("Saga Compensation Completed");
     }
 
 }

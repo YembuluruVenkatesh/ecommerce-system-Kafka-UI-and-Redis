@@ -1,5 +1,6 @@
 package com.example.inventory.service;
 
+import com.example.common.dto.ReleaseInventoryCommand;
 import com.example.common.dto.ReserveInventoryCommand;
 import com.example.inventory.entity.Inventory;
 import com.example.inventory.repository.InventoryRepository;
@@ -122,5 +123,32 @@ public class InventoryService {
     public void clearInventoryCache() {
 
         cacheService.clearCache();
+    }
+
+    public void restoreStock(
+            ReleaseInventoryCommand command) {
+
+        log.info("========================================");
+        log.info("Restoring Inventory");
+        log.info("Product : {}", command.getProduct());
+        log.info("Quantity: {}", command.getQuantity());
+        log.info("========================================");
+
+        Inventory inventory =
+                cacheService.getInventory(command.getProduct());
+
+        inventory.setStock(
+                inventory.getStock()
+                        + command.getQuantity());
+
+        Inventory updatedInventory =
+                repository.save(inventory);
+
+        cacheService.updateInventory(updatedInventory);
+
+        log.info("========================================");
+        log.info("Inventory Restored");
+        log.info("Current Stock : {}", updatedInventory.getStock());
+        log.info("========================================");
     }
 }

@@ -1,4 +1,7 @@
+com\example\common\dto\InventoryReleasedEvent.class
 com\example\common\dto\ProcessPaymentCommand.class
+com\example\common\dto\OrderCancelledEvent.class
+com\example\common\dto\ReleaseInventoryCommand.class
 com\example\common\dto\InventoryFailedEvent.class
 com\example\common\dto\OrderCreatedEvent.class
 com\example\common\dto\PaymentCompletedEvent.class
