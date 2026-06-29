@@ -1,0 +1,346 @@
+docker exec -it postgres psql -U postgres -d orderdb
+
+\dt
+
+select * from orders;
+select * from outbox;
+select * from inventory;
+select * from notification_processed_events;
+select * from inventory_processed_events;
+select * from saga_state;
+
+
+Expected Logs
+
+Order Service
+Order saved
+Outbox saved
+Published to Kafka
+
+Notification Service
+EMAIL SENT for order: ORD1001
+Notification processed: ORD1001
+
+Inventory Service
+Inventory updated for Laptop
+Event processed: ORD1001
+
+mvn clean install
+mvn clean package -DskipTests
+docker compose down
+docker compose build --no-cache
+docker compose up -d
+
+docker logs -f notification-service
+docker logs -f inventory-service
+docker logs -f order-service
+
+Verify Kafka Topic
+
+docker exec -it kafka bash
+kafka-topics --bootstrap-server localhost:9092 --list
+
+kafka-topics \
+  --create \
+  --topic orders \
+  --bootstrap-server localhost:9092 \
+  --partitions 3 \
+  --replication-factor 1
+
+http://localhost:8085/ - Kafka UI
+
+URL :http://localhost:8080/orders
+{
+  "eventId":"1111",
+  "orderId":"ORD1001",
+  "product":"Laptop",
+  "quantity":2,
+  "status":"CREATED",
+  "createdAt":"2026-06-17T14:45:00"
+}
+
+End-to-End Flow
+--------------------
+
+Client
+   ↓
+Order Service
+   ↓
+Orders Table                     ✅
+   ↓
+Outbox Table                     ✅
+   ↓
+Outbox Publisher                 ✅
+   ↓
+Kafka Topic                      ✅
+   ↓
+Inventory Consumer               ✅
+   ↓
+Inventory Processed Events       ✅
+   ↓
+Inventory Updated                ✅
+   ↓
+Notification Consumer            ✅
+   ↓
+Notification Processed Events    ✅
+
+
+E-Commerce Saga Pattern (Orchestration) 
+------------------------------------------
+
+POST /orders
+
+Order Service
+    |
+    | OrderCreatedEvent
+    v
+Saga Service
+    |
+    | ReserveInventoryCommand
+    v
+Inventory Service
+    |
+    | InventoryReservedEvent
+    v
+Saga Service
+    |
+    | ProcessPaymentCommand
+    v
+Payment Service
+    |
+    | PaymentCompletedEvent
+    v
+Saga Service
+    |
+    | SagaState = COMPLETED
+
+
+
+NEXT : 
+
+1. Fix double serialization permanently
+2. Add Retry + DLT handling
+3. Add Docker health checks
+4. Add Kafka UI
+5. Add Integration Tests (Testcontainers)
+6. Add Saga Pattern
+7. Add Observability (Zipkin / OpenTelemetry)
+
+
+
+
+# Step 1: Open PostgreSQL Container
+
+Run:
+
+```bash
+docker ps
+```
+
+Find your PostgreSQL container name. It is usually:
+
+```text
+postgres
+```
+
+Then connect:
+
+```bash
+docker exec -it postgres psql -U postgres
+```
+
+or directly into `orderdb`:
+
+```bash
+docker exec -it postgres psql -U postgres -d orderdb
+```
+
+You should see:
+
+```text
+orderdb=#
+```
+
+---
+
+# Step 2: List Databases
+
+```sql
+\l
+```
+
+Expected:
+
+```text
+orderdb
+inventorydb
+notificationdb
+postgres
+```
+
+---
+
+# Step 3: Switch Database
+
+For Order Service:
+
+```sql
+\c orderdb
+```
+
+For Inventory Service:
+
+```sql
+\c inventorydb
+```
+
+For Notification Service:
+
+```sql
+\c notificationdb
+```
+
+---
+
+# Step 4: List Tables
+
+```sql
+\dt
+```
+
+Example output:
+
+```text
+orders
+outbox
+inventory
+processed_events
+inventory_processed_events
+notification_processed_events
+```
+
+---
+
+# Step 5: Verify Outbox Payload (MOST IMPORTANT)
+
+Connect to `orderdb`:
+
+```sql
+\c orderdb
+```
+
+Run:
+
+```sql
+select id,
+       payload,
+       published
+from outbox
+order by id desc;
+```
+
+We need to see whether the payload contains:
+
+❌ Current (bad):
+
+```json
+{"orderId":"ORD1001","product":"Laptop","quantity":2}
+```
+
+or
+
+✅ Expected:
+
+```json
+{
+  "eventId":"1111",
+  "orderId":"ORD1001",
+  "product":"Laptop",
+  "quantity":2,
+  "status":"CREATED",
+  "createdAt":"2026-06-17T14:45:00"
+}
+```
+
+This query is the key to solving the issue.
+
+---
+
+# Step 6: Verify Inventory DB
+
+```sql
+\c inventorydb
+
+select * from inventory;
+
+select * from inventory_processed_events;
+```
+
+---
+
+# Step 7: Verify Notification DB
+
+```sql
+\c notificationdb
+
+select * from notification_processed_events;
+```
+
+---
+
+# Step 8: Check Consumer Exception Logs
+
+The DLT message means the consumer threw an exception **before** processing.
+
+Run:
+
+```bash
+docker logs inventory-service --tail 200
+```
+
+and
+
+```bash
+docker logs notification-service --tail 200
+```
+
+Look for lines like:
+
+```text
+Caused by:
+The given id must not be null
+```
+
+or
+
+```text
+NullPointerException
+```
+
+---
+
+## Most Likely Root Cause
+
+Your consumer does:
+
+```java
+repository.existsById(event.getEventId())
+```
+
+If:
+
+```java
+event.getEventId() == null
+```
+
+the message goes to DLT.
+
+So first run:
+
+```sql
+select id, payload, published
+from outbox
+order by id desc;
+```
+
+and paste the result here. That single query will tell us exactly whether the producer or consumer side is at fault.

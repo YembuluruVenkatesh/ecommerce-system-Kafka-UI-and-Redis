@@ -1,0 +1,7 @@
+com\example\common\dto\ProcessPaymentCommand.class
+com\example\common\dto\InventoryFailedEvent.class
+com\example\common\dto\OrderCreatedEvent.class
+com\example\common\dto\PaymentCompletedEvent.class
+com\example\common\dto\ReserveInventoryCommand.class
+com\example\common\dto\InventoryReservedEvent.class
+com\example\common\dto\PaymentFailedEvent.class
