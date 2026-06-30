@@ -57,14 +57,16 @@ public class SagaProducer {
     }
 
     public void publishOrderCancelled(OrderCancelledEvent event) {
+
         kafkaTemplate.send(
                 "order-cancelled",
+                event.getOrderId(),
                 event
         );
 
         log.info("======================================");
-        log.info("Publishing OrderCancelledEvent");
-        log.info("Order : {}", event.getOrderId());
+        log.info("OrderCancelledEvent Published");
+        log.info("Order Id : {}", event.getOrderId());
         log.info("======================================");
     }
 }

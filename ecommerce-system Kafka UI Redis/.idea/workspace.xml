@@ -8,18 +8,9 @@
       <change beforePath="$PROJECT_DIR$/../ecommerce-system" beforeDir="false" afterPath="$PROJECT_DIR$/../ecommerce-system" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Read.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Read.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-lib/src/main/java/com/example/common/dto/PaymentFailedEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/common-lib/src/main/java/com/example/common/dto/PaymentFailedEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-lib/src/main/java/com/example/common/dto/ProcessPaymentCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/common-lib/src/main/java/com/example/common/dto/ProcessPaymentCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-lib/target/classes/com/example/common/dto/PaymentFailedEvent.class" beforeDir="false" afterPath="$PROJECT_DIR$/common-lib/target/classes/com/example/common/dto/PaymentFailedEvent.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-lib/target/classes/com/example/common/dto/ProcessPaymentCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/common-lib/target/classes/com/example/common/dto/ProcessPaymentCommand.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common-lib/target/common-lib-1.0.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/common-lib/target/common-lib-1.0.0.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-lib/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/common-lib/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-lib/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/common-lib/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/inventory-service/src/main/java/com/example/inventory/consumer/InventoryConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/inventory-service/src/main/java/com/example/inventory/consumer/InventoryConsumer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/inventory-service/src/main/java/com/example/inventory/producer/InventoryProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/inventory-service/src/main/java/com/example/inventory/producer/InventoryProducer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/inventory-service/src/main/java/com/example/inventory/service/InventoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/inventory-service/src/main/java/com/example/inventory/service/InventoryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/example/orders/service/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/example/orders/service/OrderService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/example/payment/consumer/PaymentConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/example/payment/consumer/PaymentConsumer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/saga-service/src/main/java/com/example/saga/consumer/SagaConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/saga-service/src/main/java/com/example/saga/consumer/SagaConsumer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/saga-service/src/main/java/com/example/saga/producer/SagaProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/saga-service/src/main/java/com/example/saga/producer/SagaProducer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -37,27 +28,40 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 4
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 4
+}</component>
   <component name="ProjectId" id="3FoBTvLYMzM28OnJlYKbZ5QKlhQ" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;SagaOrchWithCompensationRollback&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="payment-service" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="payment-service" />
+      <option name="filePath" />
+      <method v="2" />
+    </configuration>
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="c9d5e289-a88c-4adf-b1fa-a9fac19d7d55" name="Changes" comment="" />

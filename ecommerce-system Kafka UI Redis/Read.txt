@@ -119,66 +119,42 @@ Rollback Flow:
 
 
 Client
-   │
+   |
+   | POST /orders
+   v
 Order Service
-   │
-OrderCreatedEvent
-   │
-Saga
-   │
-ReserveInventoryCommand
-   │
-Inventory
-   │
-InventoryReservedEvent
-   │
-Saga
-   │
-ProcessPaymentCommand
-   │
-Payment
-   │
-PaymentFailedEvent
-   │
-Saga
-   │
-ReleaseInventoryCommand
-   │
-Inventory
-   │
-InventoryReleasedEvent
-   │
-Saga
-   │
-FAILED
-
-
-OR 
-
-│
-├── Step 1
-│      Add new Kafka Topics
-│
-├── Step 2
-│      Create Compensation DTOs
-│
-├── Step 3
-│      Payment Failure
-│
-├── Step 4
-│      Saga publishes ReleaseInventoryCommand
-│
-├── Step 5
-│      Inventory restores stock
-│
-├── Step 6
-│      Inventory publishes InventoryReleasedEvent
-│
-├── Step 7
-│      Saga marks FAILED
-│
-└── Step 8
-       End-to-End Rollback Demo
+   |
+   | OrderCreatedEvent
+   v
+Saga Service
+   |
+   | ReserveInventoryCommand
+   v
+Inventory Service
+   |
+   | InventoryReservedEvent
+   v
+Saga Service
+   |
+   | ProcessPaymentCommand
+   v
+Payment Service
+   |
+   | PaymentFailedEvent
+   v
+Saga Service
+   |
+   | ReleaseInventoryCommand
+   v
+Inventory Service
+   |
+   | InventoryReleasedEvent
+   v
+Saga Service
+   |
+   | OrderCancelledEvent
+   v
+Order Service
 
 
 OR   

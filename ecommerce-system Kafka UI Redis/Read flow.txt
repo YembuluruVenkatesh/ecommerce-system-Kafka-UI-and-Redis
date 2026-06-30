@@ -1,0 +1,127 @@
+
+Success Architecture
+
+Client
+   │
+   ▼
+Order Service
+   │
+   ├── Save Order
+   ├── Save Outbox
+   ▼
+Outbox Scheduler
+   │
+   ▼
+Kafka
+   │
+   ▼
+Saga Service
+   │
+   ▼
+Inventory Service
+   │
+   ├── Redis Cache
+   ├── PostgreSQL
+   ▼
+InventoryReservedEvent
+   │
+   ▼
+Saga
+   │
+   ▼
+Payment Service
+   │
+   ├── Success
+   └── Failure
+
+
+
+Saga compensation flow: 
+
+
+
+
+Client
+
+   │
+   ▼
+
+Order Service
+   │
+   ├── Save Order
+   ├── Save Outbox
+   ▼
+
+Outbox Publisher
+   │
+   ▼
+
+OrderCreatedEvent
+   │
+   ▼
+
+Saga
+   │
+   ▼
+
+ReserveInventoryCommand
+   │
+   ▼
+
+Inventory
+   │
+   ├── PostgreSQL
+   ├── Redis
+   ▼
+
+InventoryReservedEvent
+   │
+   ▼
+
+Saga
+   │
+   ▼
+
+ProcessPaymentCommand
+   │
+   ▼
+
+Payment
+   │
+   ▼
+
+PaymentFailedEvent
+   │
+   ▼
+
+Saga
+   │
+   ▼
+
+ReleaseInventoryCommand
+   │
+   ▼
+
+Inventory
+   │
+   ├── Restore PostgreSQL
+   ├── Restore Redis
+   ▼
+
+InventoryReleasedEvent
+   │
+   ▼
+
+Saga
+   │
+   ▼
+
+OrderCancelledEvent
+   │
+   ▼
+
+Order Service
+   │
+   ▼
+
+Order Status = CANCELLED

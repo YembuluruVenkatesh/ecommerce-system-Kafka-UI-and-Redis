@@ -58,4 +58,20 @@ public class OrderService {
         );
         return order;
     }
+    @Transactional
+    public void cancelOrder(String orderId) {
+
+        Order order = repository.findById(orderId)
+                .orElseThrow(() ->
+                        new RuntimeException("Order not found"));
+
+        order.setStatus("CANCELLED");
+
+        repository.save(order);
+
+        log.info("======================================");
+        log.info("Order Cancelled");
+        log.info("Order Id : {}", orderId);
+        log.info("======================================");
+    }
 }

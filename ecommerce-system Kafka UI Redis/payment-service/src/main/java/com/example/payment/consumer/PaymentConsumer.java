@@ -38,6 +38,7 @@ public class PaymentConsumer {
         log.info("======================================");
 
         boolean paymentSuccess = random.nextBoolean();
+        //boolean paymentSuccess = false;
 
         if (paymentSuccess) {
 
